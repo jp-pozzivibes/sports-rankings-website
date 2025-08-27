@@ -240,6 +240,8 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             position: relative;
             overflow: hidden;
+            background-size: cover;
+            background-position: center;
         }
 
         .athlete-photo::before {
@@ -471,6 +473,8 @@
             <button class="tab" onclick="showTab('american-football')">🏈 NFL</button>
             <button class="tab" onclick="showTab('basketball')">🏀 NBA</button>
             <button class="tab" onclick="showTab('tennis')">🎾 Tennis</button>
+            <button class="tab" onclick="showTab('cricket')">🏏 Cricket</button>
+            <button class="tab" onclick="showTab('rugby')">🏉 Rugby</button>
             <button class="tab" onclick="showTab('horse-racing')">🏇 Racing</button>
         </div>
 
@@ -506,6 +510,22 @@
             <div id="tennis-grid" class="athletes-grid" style="display: none;"></div>
         </div>
 
+        <div id="cricket" class="tab-content">
+            <div id="cricket-loading" class="loading">
+                <i class="fas fa-spinner"></i>
+                <p>Loading cricket stars...</p>
+            </div>
+            <div id="cricket-grid" class="athletes-grid" style="display: none;"></div>
+        </div>
+
+        <div id="rugby" class="tab-content">
+            <div id="rugby-loading" class="loading">
+                <i class="fas fa-spinner"></i>
+                <p>Loading rugby legends...</p>
+            </div>
+            <div id="rugby-grid" class="athletes-grid" style="display: none;"></div>
+        </div>
+
         <div id="horse-racing" class="tab-content">
             <div id="racing-loading" class="loading">
                 <i class="fas fa-spinner"></i>
@@ -520,7 +540,7 @@
     </button>
 
     <script>
-        // Mock data with clickable destinations
+        // Mock data with clickable destinations and real photos
         const sportsData = {
             football: [
                 {
@@ -536,6 +556,7 @@
                     form: ["W", "W", "W", "L", "W"],
                     next_event: "vs Barcelona - El Clasico",
                     odds: ["1.85", "2.10"],
+                    photo: "https://img.realmadrid.com/media/q3bdmb0z/mbappe_800x450.jpg",
                     clickUrl: "https://www.realmadrid.com/en/football/squad/kylian-mbappe"
                 },
                 {
@@ -551,6 +572,7 @@
                     form: ["W", "W", "W", "W", "L"],
                     next_event: "vs Arsenal - Premier League",
                     odds: ["1.65", "2.30"],
+                    photo: "https://resources.mancity.com/mancity/photo/2022/07/13/1f3ff0e2-8c3d-43e7-9b81-e5bb22a8b2f8/GettyImages-1405443256.jpg",
                     clickUrl: "https://www.mancity.com/players/erling-haaland"
                 },
                 {
@@ -566,7 +588,56 @@
                     form: ["W", "W", "D", "W", "W"],
                     next_event: "vs Real Madrid - El Clasico",
                     odds: ["2.10", "1.85"],
+                    photo: "https://img.fcbarcelona.com/image/upload/t_card_retina/f_auto/v1693296203/Temporada_23-24/Primer_equip/Lamine_Yamal_2023-24_v2.jpg",
                     clickUrl: "https://www.fcbarcelona.com/en/football/first-team/players/lamine-yamal"
+                },
+                {
+                    rank: 4,
+                    name: "Jude Bellingham",
+                    team: "Real Madrid",
+                    country: "England",
+                    age: 21,
+                    rating: 90,
+                    goals: 18,
+                    assists: 15,
+                    value: "€150M",
+                    form: ["W", "L", "W", "W", "W"],
+                    next_event: "vs Barcelona - El Clasico",
+                    odds: ["1.95", "1.95"],
+                    photo: "https://img.realmadrid.com/media/55ubzd3r/bellingham_550x650.jpg",
+                    clickUrl: "https://www.realmadrid.com/en/football/squad/jude-bellingham"
+                },
+                {
+                    rank: 5,
+                    name: "Vinicius Jr.",
+                    team: "Real Madrid",
+                    country: "Brazil",
+                    age: 24,
+                    rating: 90,
+                    goals: 24,
+                    assists: 16,
+                    value: "€130M",
+                    form: ["W", "W", "L", "W", "D"],
+                    next_event: "vs Barcelona - El Clasico",
+                    odds: ["1.80", "2.05"],
+                    photo: "https://img.realmadrid.com/media/q4xd3v2t/vinicius_550x650.jpg",
+                    clickUrl: "https://www.realmadrid.com/en/football/squad/vinicius"
+                },
+                {
+                    rank: 6,
+                    name: "Pedri",
+                    team: "Barcelona",
+                    country: "Spain",
+                    age: 22,
+                    rating: 88,
+                    goals: 12,
+                    assists: 22,
+                    value: "€100M",
+                    form: ["W", "W", "W", "D", "L"],
+                    next_event: "vs Real Madrid - El Clasico",
+                    odds: ["2.20", "1.75"],
+                    photo: "https://img.fcbarcelona.com/image/upload/t_card_retina/f_auto/v1656341681/Primer_equip/2022-23/Pedri_2022-23.jpg",
+                    clickUrl: "https://www.fcbarcelona.com/en/football/first-team/players/pedri"
                 }
             ],
             nfl: [
@@ -583,6 +654,7 @@
                     form: ["W", "W", "L", "W", "W"],
                     next_event: "vs Chiefs - AFC Championship",
                     odds: ["2.10", "1.75"],
+                    photo: "https://static.clubs.nfl.com/image/private/t_new_photo_album/f_auto/bills/josh-allen-profile.jpg",
                     clickUrl: "https://www.buffalobills.com/team/players-roster/josh-allen/"
                 },
                 {
@@ -598,6 +670,7 @@
                     form: ["W", "W", "W", "W", "L"],
                     next_event: "vs Bills - AFC Championship",
                     odds: ["1.75", "2.10"],
+                    photo: "https://static.clubs.nfl.com/image/private/t_new_photo_album/f_auto/chiefs/patrick-mahomes-profile.jpg",
                     clickUrl: "https://www.chiefs.com/team/players-roster/patrick-mahomes/"
                 },
                 {
@@ -613,7 +686,56 @@
                     form: ["W", "L", "W", "W", "W"],
                     next_event: "vs Steelers - Wild Card",
                     odds: ["1.90", "1.95"],
+                    photo: "https://static.clubs.nfl.com/image/private/t_new_photo_album/f_auto/ravens/lamar-jackson-profile.jpg",
                     clickUrl: "https://www.baltimoreravens.com/team/players-roster/lamar-jackson/"
+                },
+                {
+                    rank: 4,
+                    name: "Joe Burrow",
+                    team: "Cincinnati Bengals",
+                    country: "USA",
+                    age: 28,
+                    rating: 91,
+                    goals: "35 TD",
+                    assists: "4,100 Yds",
+                    value: "$275M",
+                    form: ["W", "W", "L", "L", "W"],
+                    next_event: "vs Steelers - Division",
+                    odds: ["2.05", "1.80"],
+                    photo: "https://static.clubs.nfl.com/image/private/t_new_photo_album/f_auto/bengals/joe-burrow-profile.jpg",
+                    clickUrl: "https://www.bengals.com/team/players-roster/joe-burrow/"
+                },
+                {
+                    rank: 5,
+                    name: "Dak Prescott",
+                    team: "Dallas Cowboys",
+                    country: "USA",
+                    age: 31,
+                    rating: 89,
+                    goals: "33 TD",
+                    assists: "3,900 Yds",
+                    value: "$240M",
+                    form: ["L", "W", "W", "L", "W"],
+                    next_event: "vs Giants - NFC East",
+                    odds: ["1.85", "2.00"],
+                    photo: "https://static.clubs.nfl.com/image/private/t_new_photo_album/f_auto/cowboys/dak-prescott-profile.jpg",
+                    clickUrl: "https://www.dallascowboys.com/team/players-roster/dak-prescott/"
+                },
+                {
+                    rank: 6,
+                    name: "Tua Tagovailoa",
+                    team: "Miami Dolphins",
+                    country: "USA",
+                    age: 26,
+                    rating: 87,
+                    goals: "29 TD",
+                    assists: "3,700 Yds",
+                    value: "$212M",
+                    form: ["W", "L", "W", "W", "L"],
+                    next_event: "vs Jets - AFC East",
+                    odds: ["2.25", "1.70"],
+                    photo: "https://static.clubs.nfl.com/image/private/t_new_photo_album/f_auto/dolphins/tua-tagovailoa-profile.jpg",
+                    clickUrl: "https://www.miamidolphins.com/team/players-roster/tua-tagovailoa/"
                 }
             ],
             nba: [
@@ -663,6 +785,104 @@
                     clickUrl: "https://www.nba.com/nuggets/roster/nikola-jokic"
                 }
             ],
+            nba: [
+                {
+                    rank: 1,
+                    name: "Luka Dončić",
+                    team: "Dallas Mavericks",
+                    country: "Slovenia",
+                    age: 25,
+                    rating: 96,
+                    goals: "32.8 PPG",
+                    assists: "8.2 APG",
+                    value: "$215M",
+                    form: ["W", "W", "W", "L", "W"],
+                    next_event: "vs Lakers - Regular Season",
+                    odds: ["1.95", "1.90"],
+                    photo: "https://cdn.nba.com/headshots/nba/latest/1040x760/1629029.png",
+                    clickUrl: "https://www.mavs.com/roster/luka-doncic/"
+                },
+                {
+                    rank: 2,
+                    name: "Jayson Tatum",
+                    team: "Boston Celtics",
+                    country: "USA",
+                    age: 26,
+                    rating: 94,
+                    goals: "28.5 PPG",
+                    assists: "5.1 APG",
+                    value: "$314M",
+                    form: ["W", "W", "L", "W", "W"],
+                    next_event: "vs Heat - Eastern Conference",
+                    odds: ["1.70", "2.15"],
+                    photo: "https://cdn.nba.com/headshots/nba/latest/1040x760/1628369.png",
+                    clickUrl: "https://www.nba.com/celtics/roster/jayson-tatum"
+                },
+                {
+                    rank: 3,
+                    name: "Nikola Jokić",
+                    team: "Denver Nuggets",
+                    country: "Serbia",
+                    age: 29,
+                    rating: 95,
+                    goals: "29.2 PPG",
+                    assists: "10.1 APG",
+                    value: "$270M",
+                    form: ["L", "W", "W", "W", "W"],
+                    next_event: "vs Warriors - Western Conference",
+                    odds: ["2.05", "1.80"],
+                    photo: "https://cdn.nba.com/headshots/nba/latest/1040x760/203999.png",
+                    clickUrl: "https://www.nba.com/nuggets/roster/nikola-jokic"
+                },
+                {
+                    rank: 4,
+                    name: "Giannis Antetokounmpo",
+                    team: "Milwaukee Bucks",
+                    country: "Greece",
+                    age: 29,
+                    rating: 94,
+                    goals: "30.1 PPG",
+                    assists: "6.8 APG",
+                    value: "$228M",
+                    form: ["W", "L", "W", "W", "L"],
+                    next_event: "vs Pacers - Central Division",
+                    odds: ["1.80", "2.05"],
+                    photo: "https://cdn.nba.com/headshots/nba/latest/1040x760/203507.png",
+                    clickUrl: "https://www.nba.com/bucks/roster/giannis-antetokounmpo"
+                },
+                {
+                    rank: 5,
+                    name: "Stephen Curry",
+                    team: "Golden State Warriors",
+                    country: "USA",
+                    age: 36,
+                    rating: 92,
+                    goals: "26.4 PPG",
+                    assists: "5.1 APG",
+                    value: "$215M",
+                    form: ["W", "W", "L", "L", "W"],
+                    next_event: "vs Lakers - Pacific Division",
+                    odds: ["2.10", "1.75"],
+                    photo: "https://cdn.nba.com/headshots/nba/latest/1040x760/201939.png",
+                    clickUrl: "https://www.nba.com/warriors/roster/stephen-curry"
+                },
+                {
+                    rank: 6,
+                    name: "Anthony Davis",
+                    team: "Los Angeles Lakers",
+                    country: "USA",
+                    age: 31,
+                    rating: 90,
+                    goals: "27.8 PPG",
+                    assists: "3.5 APG",
+                    value: "$186M",
+                    form: ["L", "W", "W", "W", "L"],
+                    next_event: "vs Warriors - Pacific Division",
+                    odds: ["1.85", "2.00"],
+                    photo: "https://cdn.nba.com/headshots/nba/latest/1040x760/203076.png",
+                    clickUrl: "https://www.nba.com/lakers/roster/anthony-davis"
+                }
+            ],
             tennis: [
                 {
                     rank: 1,
@@ -677,6 +897,7 @@
                     form: ["W", "W", "L", "W", "W"],
                     next_event: "vs Alcaraz - Australian Open",
                     odds: ["1.75", "2.10"],
+                    photo: "https://www.atptour.com/-/media/images/news/2024/01/14/17/33/sinner-ao24-day7-sunday.jpg",
                     clickUrl: "https://www.atptour.com/en/players/jannik-sinner/s0ag/overview"
                 },
                 {
@@ -692,6 +913,7 @@
                     form: ["W", "W", "W", "L", "W"],
                     next_event: "vs Sinner - Australian Open",
                     odds: ["2.10", "1.75"],
+                    photo: "https://www.atptour.com/-/media/images/news/2024/05/12/10/29/alcaraz-madrid24-trophy.jpg",
                     clickUrl: "https://www.atptour.com/en/players/carlos-alcaraz/a0e2/overview"
                 },
                 {
@@ -707,7 +929,252 @@
                     form: ["W", "W", "W", "L", "W"],
                     next_event: "vs Sabalenka - Miami Open",
                     odds: ["1.65", "2.25"],
+                    photo: "https://www.wtatennis.com/images/0dbeVQ6Tsa0H9XvtjfbJCr/1c6ccf7adbfc7f36e5ac2b7d0dbeb18f/Iga_Swiatek_RG24_Trophy.jpg",
                     clickUrl: "https://www.wtatennis.com/players/326408/iga-swiatek"
+                },
+                {
+                    rank: 4,
+                    name: "Alexander Zverev",
+                    team: "Germany",
+                    country: "Germany",
+                    age: 27,
+                    rating: 89,
+                    goals: "3 Titles",
+                    assists: "45-15 W-L",
+                    value: "$8M",
+                    form: ["W", "L", "W", "W", "L"],
+                    next_event: "vs Medvedev - Miami Masters",
+                    odds: ["1.95", "1.85"],
+                    photo: "https://www.atptour.com/-/media/images/news/2024/05/19/09/54/zverev-rg24-day1.jpg",
+                    clickUrl: "https://www.atptour.com/en/players/alexander-zverev/z355/overview"
+                },
+                {
+                    rank: 5,
+                    name: "Aryna Sabalenka",
+                    team: "Belarus",
+                    country: "Belarus",
+                    age: 26,
+                    rating: 91,
+                    goals: "4 Titles",
+                    assists: "52-12 W-L",
+                    value: "$9M",
+                    form: ["W", "W", "L", "W", "W"],
+                    next_event: "vs Swiatek - Miami Open",
+                    odds: ["2.25", "1.65"],
+                    photo: "https://www.wtatennis.com/images/0dbeVQ6Tsa0H9XvtjfbJCr/32ea30d7b1c9d2baffe6dd9d42ffa8a4/Aryna_Sabalenka_AO24_Trophy.jpg",
+                    clickUrl: "https://www.wtatennis.com/players/311248/aryna-sabalenka"
+                },
+                {
+                    rank: 6,
+                    name: "Novak Djokovic",
+                    team: "Serbia",
+                    country: "Serbia",
+                    age: 37,
+                    rating: 88,
+                    goals: "1 Title",
+                    assists: "28-8 W-L",
+                    value: "$7M",
+                    form: ["W", "W", "L", "L", "W"],
+                    next_event: "vs Rublev - Monte Carlo",
+                    odds: ["1.50", "2.50"],
+                    photo: "https://www.atptour.com/-/media/images/news/2024/07/28/14/10/djokovic-paris24-olympics-gold.jpg",
+                    clickUrl: "https://www.atptour.com/en/players/novak-djokovic/d643/overview"
+                }
+            ],
+            cricket: [
+                {
+                    rank: 1,
+                    name: "Virat Kohli",
+                    team: "India",
+                    country: "India",
+                    age: 36,
+                    rating: 94,
+                    goals: "26,588 Runs",
+                    assists: "80 100s",
+                    value: "$24M",
+                    form: ["W", "W", "L", "W", "W"],
+                    next_event: "vs Australia - Test Series",
+                    odds: ["1.85", "2.10"],
+                    photo: "https://www.bcci.tv/photos/58893/small/vkohli.jpg",
+                    clickUrl: "https://www.bcci.tv/profiles/58893/virat-kohli"
+                },
+                {
+                    rank: 2,
+                    name: "Babar Azam",
+                    team: "Pakistan",
+                    country: "Pakistan",
+                    age: 30,
+                    rating: 91,
+                    goals: "11,895 Runs",
+                    assists: "31 100s",
+                    value: "$18M",
+                    form: ["W", "L", "W", "W", "L"],
+                    next_event: "vs England - ODI Series",
+                    odds: ["2.20", "1.75"],
+                    photo: "https://static.cricbuzz.com/a/img/v1/192x192/i1/c170624/babar-azam.jpg",
+                    clickUrl: "https://www.cricbuzz.com/profiles/8966/babar-azam"
+                },
+                {
+                    rank: 3,
+                    name: "Jos Buttler",
+                    team: "England",
+                    country: "England",
+                    age: 34,
+                    rating: 89,
+                    goals: "9,635 Runs",
+                    assists: "28 100s",
+                    value: "$16M",
+                    form: ["L", "W", "W", "W", "W"],
+                    next_event: "vs Pakistan - ODI Series",
+                    odds: ["1.75", "2.20"],
+                    photo: "https://static.cricbuzz.com/a/img/v1/192x192/i1/c170618/jos-buttler.jpg",
+                    clickUrl: "https://www.cricbuzz.com/profiles/9952/jos-buttler"
+                },
+                {
+                    rank: 4,
+                    name: "Steve Smith",
+                    team: "Australia",
+                    country: "Australia",
+                    age: 35,
+                    rating: 90,
+                    goals: "15,582 Runs",
+                    assists: "32 100s",
+                    value: "$15M",
+                    form: ["W", "W", "W", "L", "L"],
+                    next_event: "vs India - Test Series",
+                    odds: ["2.10", "1.85"],
+                    photo: "https://static.cricbuzz.com/a/img/v1/192x192/i1/c170659/steven-smith.jpg",
+                    clickUrl: "https://www.cricbuzz.com/profiles/5789/steve-smith"
+                },
+                {
+                    rank: 5,
+                    name: "Kane Williamson",
+                    team: "New Zealand",
+                    country: "New Zealand",
+                    age: 34,
+                    rating: 88,
+                    goals: "13,184 Runs",
+                    assists: "32 100s",
+                    value: "$12M",
+                    form: ["W", "L", "L", "W", "W"],
+                    next_event: "vs Sri Lanka - Test Series",
+                    odds: ["1.95", "1.90"],
+                    photo: "https://static.cricbuzz.com/a/img/v1/192x192/i1/c170638/kane-williamson.jpg",
+                    clickUrl: "https://www.cricbuzz.com/profiles/4474/kane-williamson"
+                },
+                {
+                    rank: 6,
+                    name: "Jasprit Bumrah",
+                    team: "India",
+                    country: "India",
+                    age: 31,
+                    rating: 92,
+                    goals: "159 Wickets",
+                    assists: "21.99 Avg",
+                    value: "$20M",
+                    form: ["W", "W", "W", "L", "W"],
+                    next_event: "vs Australia - Test Series",
+                    odds: ["1.70", "2.25"],
+                    photo: "https://static.cricbuzz.com/a/img/v1/192x192/i1/c170629/jasprit-bumrah.jpg",
+                    clickUrl: "https://www.cricbuzz.com/profiles/9019/jasprit-bumrah"
+                }
+            ],
+            rugby: [
+                {
+                    rank: 1,
+                    name: "Antoine Dupont",
+                    team: "France",
+                    country: "France",
+                    age: 28,
+                    rating: 96,
+                    goals: "65 Caps",
+                    assists: "47 Tries",
+                    value: "€8M",
+                    form: ["W", "W", "W", "L", "W"],
+                    next_event: "vs Ireland - Six Nations",
+                    odds: ["1.75", "2.10"],
+                    photo: "https://www.world.rugby/assets/img/news-images/dupont-france-wales-2023.jpg",
+                    clickUrl: "https://www.world.rugby/players/1234567890/antoine-dupont"
+                },
+                {
+                    rank: 2,
+                    name: "Johnny Sexton",
+                    team: "Ireland",
+                    country: "Ireland",
+                    age: 39,
+                    rating: 93,
+                    goals: "109 Caps",
+                    assists: "557 Points",
+                    value: "€6M",
+                    form: ["W", "W", "L", "W", "W"],
+                    next_event: "vs France - Six Nations",
+                    odds: ["2.10", "1.75"],
+                    photo: "https://www.world.rugby/assets/img/news-images/sexton-ireland-2023.jpg",
+                    clickUrl: "https://www.world.rugby/players/0987654321/johnny-sexton"
+                },
+                {
+                    rank: 3,
+                    name: "Beauden Barrett",
+                    team: "New Zealand",
+                    country: "New Zealand",
+                    age: 33,
+                    rating: 91,
+                    goals: "117 Caps",
+                    assists: "721 Points",
+                    value: "€7M",
+                    form: ["L", "W", "W", "W", "L"],
+                    next_event: "vs South Africa - Rugby Championship",
+                    odds: ["1.90", "1.95"],
+                    photo: "https://www.world.rugby/assets/img/news-images/barrett-nz-2023.jpg",
+                    clickUrl: "https://www.allblacks.com/players/beauden-barrett"
+                },
+                {
+                    rank: 4,
+                    name: "Maro Itoje",
+                    team: "England",
+                    country: "England",
+                    age: 30,
+                    rating: 89,
+                    goals: "75 Caps",
+                    assists: "12 Tries",
+                    value: "€5M",
+                    form: ["W", "L", "W", "L", "W"],
+                    next_event: "vs Wales - Six Nations",
+                    odds: ["1.80", "2.05"],
+                    photo: "https://www.world.rugby/assets/img/news-images/itoje-england-2023.jpg",
+                    clickUrl: "https://www.englandrugby.com/players/maro-itoje"
+                },
+                {
+                    rank: 5,
+                    name: "Cheslin Kolbe",
+                    team: "South Africa",
+                    country: "South Africa",
+                    age: 31,
+                    rating: 90,
+                    goals: "35 Caps",
+                    assists: "17 Tries",
+                    value: "€6M",
+                    form: ["W", "W", "W", "L", "L"],
+                    next_event: "vs New Zealand - Rugby Championship",
+                    odds: ["1.95", "1.90"],
+                    photo: "https://www.world.rugby/assets/img/news-images/kolbe-sa-2023.jpg",
+                    clickUrl: "https://www.sarugby.co.za/players/cheslin-kolbe"
+                },
+                {
+                    rank: 6,
+                    name: "Tadhg Furlong",
+                    team: "Ireland",
+                    country: "Ireland",
+                    age: 32,
+                    rating: 87,
+                    goals: "71 Caps",
+                    assists: "8 Tries",
+                    value: "€4M",
+                    form: ["W", "W", "L", "W", "W"],
+                    next_event: "vs France - Six Nations",
+                    odds: ["2.05", "1.80"],
+                    photo: "https://www.world.rugby/assets/img/news-images/furlong-ireland-2023.jpg",
+                    clickUrl: "https://www.irishrugby.ie/players/tadhg-furlong"
                 }
             ],
             racing: [
@@ -784,6 +1251,8 @@
                 'american-football': 'nfl-grid',
                 'basketball': 'nba-grid',
                 'tennis': 'tennis-grid',
+                'cricket': 'cricket-grid',
+                'rugby': 'rugby-grid',
                 'horse-racing': 'racing-grid'
             };
 
@@ -792,6 +1261,8 @@
                 'american-football': 'nfl',
                 'basketball': 'nba',
                 'tennis': 'tennis',
+                'cricket': 'cricket',
+                'rugby': 'rugby',
                 'horse-racing': 'racing'
             };
 
@@ -811,12 +1282,18 @@
                 return `<div class="form-match ${className}">${result}</div>`;
             }).join('');
 
+            const photoStyle = athlete.photo ? 
+                `background-image: url('${athlete.photo}'); color: transparent;` : 
+                `background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;`;
+
+            const initials = athlete.photo ? '' : athlete.name.split(' ').map(n => n[0]).join('');
+
             return `
                 <div class="athlete-card" onclick="window.open('${athlete.clickUrl}', '_blank')">
                     <div class="click-hint">Click to explore</div>
                     <div class="athlete-header">
                         <div class="athlete-rank">#${athlete.rank}</div>
-                        <div class="athlete-photo">${athlete.name.split(' ').map(n => n[0]).join('')}</div>
+                        <div class="athlete-photo" style="${photoStyle}">${initials}</div>
                         <div class="athlete-info">
                             <h3>${athlete.name} <span class="sport-tag">${sport.toUpperCase()}</span></h3>
                             <p><i class="fas fa-shield-alt"></i> ${athlete.team}</p>
@@ -827,11 +1304,11 @@
                     <div class="stats-grid">
                         <div class="stat">
                             <div class="stat-value">${athlete.goals}</div>
-                            <div class="stat-label">${sport === 'football' ? 'Goals' : sport === 'nfl' || sport === 'nba' ? 'Stats' : 'Performance'}</div>
+                            <div class="stat-label">${sport === 'football' ? 'Goals' : sport === 'nfl' || sport === 'nba' ? 'Stats' : sport === 'cricket' ? 'Runs/Wickets' : 'Performance'}</div>
                         </div>
                         <div class="stat">
                             <div class="stat-value">${athlete.assists}</div>
-                            <div class="stat-label">${sport === 'football' ? 'Assists' : sport === 'tennis' ? 'Record' : 'Season'}</div>
+                            <div class="stat-label">${sport === 'football' ? 'Assists' : sport === 'tennis' ? 'Record' : sport === 'cricket' ? 'Centuries' : sport === 'rugby' ? 'Tries/Points' : 'Season'}</div>
                         </div>
                         <div class="stat">
                             <div class="stat-value">${athlete.value}</div>
